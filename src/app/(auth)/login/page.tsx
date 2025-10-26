@@ -6,15 +6,23 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
       console.log("Login:", { email, password });
       setIsLoading(false);
     }, 1500);
+
+    const res = await fetch("/api", {
+      method: "post",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ email, password, action: "login" }),
+    });
+
+    const data = await res.json();
+    console.log(data.message);
   };
 
   return (
