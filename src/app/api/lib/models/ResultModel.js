@@ -19,5 +19,4 @@ const resultSchema = mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const Result = mongoose.models.Result || mongoose.model("Result", resultSchema);
-module.exports = { Result };
+module.exports = { Result: mongoose.model("Result", resultSchema) };
