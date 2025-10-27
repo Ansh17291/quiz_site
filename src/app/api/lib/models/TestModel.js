@@ -17,4 +17,5 @@ const testSchema = mongoose.Schema({
   totalTime: { type: Number },
 });
 
-module.exports = { Test: mongoose.model("Test", testSchema) };
+const Test = mongoose.models.Test || mongoose.model("Test", testSchema);
+module.exports = { Test };

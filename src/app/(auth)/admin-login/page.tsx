@@ -1,24 +1,46 @@
 "use client";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    setTimeout(() => {
-      console.log("Login:", { email, password });
+    try {
+      const res = await fetch("/api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, action: "student-login" }),
+      });
+
+      const data = await res.json();
+      console.log("login response", data);
+
+      if (res.ok) {
+        // Server sets httpOnly cookie; front-end can't read it. Redirect to student area.
+        router.push("/user");
+      } else {
+        setErrorMsg(data.message || "Login failed");
+      }
+    } catch (err) {
+      setErrorMsg("Network error");
+      console.error(err);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
 
     const res = await fetch("/api", {
       method: "post",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ email, password, action: "login" }),
+      body: JSON.stringify({ email, password, action: "admin-login" }),
     });
 
     const data = await res.json();
@@ -29,7 +51,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 p-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Sign In
+          Admin Login Page
         </h1>
 
         <div className="space-y-4">
@@ -49,7 +71,6 @@ export default function LoginPage() {
               placeholder="your@email.com"
             />
           </div>
-
           <div>
             <label
               htmlFor="password"
@@ -66,7 +87,6 @@ export default function LoginPage() {
               placeholder="••••••••"
             />
           </div>
-
           <button
             onClick={handleSubmit}
             disabled={isLoading}
@@ -90,6 +110,22 @@ export default function LoginPage() {
               "Sign In"
             )}
           </button>
+          <br />
+          <br />
+          <Link
+            href="/teacher-login"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Teacher Login Page
+          </Link>
+          <br />
+          <br />
+          <Link
+            href="/student-login"
+            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Student Login Page
+          </Link>
         </div>
       </div>
     </div>

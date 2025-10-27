@@ -8,10 +8,26 @@ export default function MainPage() {
       <button
         className="bg-red-200 p-3 rounded-lg"
         onClick={() => {
-          router.push("/login");
+          router.push("/admin-login");
         }}
       >
-        Go to login
+        Go to Admin login
+      </button>
+      <button
+        className="bg-red-200 p-3 rounded-lg"
+        onClick={() => {
+          router.push("/teacher-login");
+        }}
+      >
+        Go to Teacher login
+      </button>
+      <button
+        className="bg-red-200 p-3 rounded-lg"
+        onClick={() => {
+          router.push("/student-login");
+        }}
+      >
+        Go to Student login
       </button>
     </>
   );
