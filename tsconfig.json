@@ -37,7 +37,7 @@
     "**/*.mts",
     ".next\\dev/types/**/*.ts",
     ".next\\dev/types/**/*.ts"
-  ],
+, "src/app/teacher/create-quiz"  ],
   "exclude": [
     "node_modules"
   ]
