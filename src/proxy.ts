@@ -23,5 +23,5 @@ export function proxy(req: NextRequest) {
 
 // ✅ Apply to specific routes
 export const config = {
-    matcher: ["/user"], // Protect /hello route
+    matcher: ["/user/:path*", "/teacher/:path*", "/admin/:path*"], // Protect /hello route
 };

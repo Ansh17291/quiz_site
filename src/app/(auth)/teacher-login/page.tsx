@@ -1,19 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
-
-    setTimeout(() => {
-      console.log("Login:", { email, password });
-      setIsLoading(false);
-    }, 1500);
 
     const res = await fetch("/api", {
       method: "post",
@@ -23,6 +20,10 @@ export default function LoginPage() {
 
     const data = await res.json();
     console.log(data.message);
+
+    if (data.message === "Real") {
+      router.push("/teacher");
+    }
   };
 
   return (
