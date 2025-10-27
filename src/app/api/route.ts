@@ -26,7 +26,6 @@ export async function POST(req: Request) {
             // if (!user) return NextResponse.json({ message: "User not found" }, { status: 404 });
             const match = await bcrypt.compare(password, user.password);
             if (match) {
-                console.log("Pass mathedc")
                 const jwt_auth = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
                 const res = NextResponse.json({ token: jwt_auth, message: "Real", user: { email: user.email, role: user.role } });
                 // set httpOnly cookie from the server
@@ -37,6 +36,7 @@ export async function POST(req: Request) {
                     path: "/",
                     maxAge: 60 * 60 * 24, // 1 day
                 });
+                console.log(res)
                 return res;
             } else {
                 return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });

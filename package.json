@@ -12,6 +12,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "jose": "^6.1.0",
+    "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.548.0",
     "mongoose": "^8.19.2",
@@ -20,6 +21,9 @@
     "react-dom": "19.2.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19",
