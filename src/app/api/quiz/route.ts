@@ -35,7 +35,7 @@ export async function POST(req: Request) {
             await newTest.save();
         } else if (action === "get-data") {
             //Ideally we'll be getting the id of the quiz to look for
-            const test = await Test.findOne({ testName: "sabsja" }).populate("questionRef");
+            const test = await Test.findOne({ testName: "My Quiz" }).populate("questionRef");
             console.log(test.testName)
             return NextResponse.json({ values: test });
         }

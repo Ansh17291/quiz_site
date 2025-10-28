@@ -13,7 +13,7 @@ export async function POST(req: Request) {
         const { email, password, action } = body;
         if (action === "signup") {
             const name = "Saad";
-            const role = "admin";
+            const role = "student";
             const newUser = await User.create({ name, email, password, role });
             const id = newUser.id;
             const jwt_auth = jwt.sign({ id }, JWT_SECRET, { expiresIn: '24h' });
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 const jwt_auth = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
-                const res = NextResponse.json({ token: jwt_auth, message: "Real", user: { email: user.email, role: user.role } });
+                const res = NextResponse.json({ token: jwt_auth, message: "Real", user: { id: user._id, email: user.email, role: user.role } });
                 res.cookies.set("token", jwt_auth, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",

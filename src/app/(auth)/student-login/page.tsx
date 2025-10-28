@@ -26,7 +26,7 @@ export default function LoginPage() {
       console.log("login response", data);
 
       if (res.ok) {
-        router.push("/user");
+        router.push(`/user/${data.user.id}`);
       } else {
         setErrorMsg(data.message || "Login failed");
       }

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { CheckCircle, Clock, Send } from "lucide-react";
+import { Clock, Send } from "lucide-react";
 
 export default function QuizApp() {
   // Quiz state (initialize with safe defaults)
@@ -14,7 +14,8 @@ export default function QuizApp() {
     questions: [],
   });
 
-  const rawQuiz = useRef(null);
+  // typed as any to match the dynamic shape returned from the API
+  const rawQuiz = useRef<any>(null);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<string | number, number>>({});
@@ -35,8 +36,7 @@ export default function QuizApp() {
         if (!quiz_data.ok) throw new Error(`Fetch failed: ${quiz_data.status}`);
         const data = await quiz_data.json();
 
-        rawQuiz.current = data;
-        console.log(rawQuiz.current);
+        rawQuiz.current = data.values;
 
         if (!mounted) return;
 
@@ -102,8 +102,18 @@ export default function QuizApp() {
   const handleSubmit = async () => {
     const attempted = Object.keys(answers).length;
     console.log(rawQuiz.current);
+    let correctAnswers = 0;
+    // safely iterate only if questionRef exists
+    rawQuiz.current?.questionRef?.map((individualQ: any) => {
+      if (answers[individualQ._id] == individualQ.correctAnswer) {
+        correctAnswers++;
+      }
+    });
+
     alert(
-      `Quiz submitted!\nAttempted: ${attempted}/${quiz.questions.length} questions`
+      `Quiz submitted!\nAttempted: ${attempted}/${
+        quiz.questions.length
+      } questions\nResult: ${(correctAnswers / quiz.questions.length) * 100}%`
     );
 
     console.log("Answers:", answers);
