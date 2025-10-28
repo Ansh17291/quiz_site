@@ -62,7 +62,7 @@ export default function QuizCreator() {
 
   const handleSave = async () => {
     const quizData = {
-      title: quizTitle,
+      testName: quizTitle,
       totalTime: timeLimit,
       questions: questions.map((q) => ({
         mainQuestion: q.question,
@@ -76,7 +76,7 @@ export default function QuizCreator() {
       const res = await fetch("/api/quiz", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(quizData, null, 2),
+        body: JSON.stringify({ ...quizData, action: "create-quiz" }, null, 2),
       });
 
       const data = await res.json();
