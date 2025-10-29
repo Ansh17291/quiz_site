@@ -45,7 +45,6 @@ export default function UserDashboard({
           body: JSON.stringify({ action: "get-tests", userID: slug }),
         });
         const data = await rawData.json();
-        console.log(data);
 
         if (!mounted) return;
 

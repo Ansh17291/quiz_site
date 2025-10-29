@@ -10,12 +10,6 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      console.log("Signup:", { email, password });
-      setIsLoading(false);
-    }, 1500);
-
     const res = await fetch("/api", {
       method: "post",
       headers: { "Content-type": "application/json" },

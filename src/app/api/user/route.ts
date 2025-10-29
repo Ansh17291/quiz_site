@@ -21,8 +21,6 @@ export async function POST(req: Request) {
         } else if (action === "logout") {
             const response = NextResponse.json({ message: 'Logged out' });
 
-            console.log("hansdsbndj")
-
             response.cookies.set('token', '', {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',

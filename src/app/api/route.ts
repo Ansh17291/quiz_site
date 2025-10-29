@@ -27,7 +27,7 @@ export async function POST(req: Request) {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 const jwt_auth = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
-                const res = NextResponse.json({ token: jwt_auth, message: "Real", user: { email: user.email, role: user.role } });
+                const res = NextResponse.json({ token: jwt_auth, message: "Real", user: { id: user._id, email: user.email, role: user.role } });
                 // set httpOnly cookie from the server
                 res.cookies.set("token", jwt_auth, {
                     httpOnly: true,

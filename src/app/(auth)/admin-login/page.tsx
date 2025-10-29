@@ -26,7 +26,7 @@ export default function LoginPage() {
 
       if (res.ok) {
         // Server sets httpOnly cookie; front-end can't read it. Redirect to student area.
-        router.push("/admin");
+        router.push(`/admin/${data.user.id}`);
       } else {
         setErrorMsg(data.message || "Login failed");
       }
